@@ -10,7 +10,7 @@
 (require "include.rkt")
 
 ;; contains simple dictionary definition
-(require "test-dictionary.rkt")
+(require "dictionary.rkt")
 (require racket/trace)
 ;; -----------------------------------------------------
 ;; HELPER FUNCTIONS
@@ -39,15 +39,15 @@
 
 (define createbv
   (lambda (hashlist dict)
-   (cond((null? hashlist) '())
+   (cond((null? hashlist) '() )
         (else 
-        (cons(map(car hashlist)dict) (createbv (cdr hashlist)dict))
+        (append(map(car hashlist)dict) (createbv(cdr hashlist)dict))
        )
        )
     )
   )
     
- (trace createbv)
+ ;(trace createbv)
 
 (define wordhash
   (lambda (hashlist word)
@@ -59,15 +59,24 @@
            )
          
     )))
-(trace wordhash)
+;(trace wordhash)
 
 (define compare
   (lambda (bv wordhashlist)
-   (if(null? wordhashlist)
-      '#t
-      ;'()
-    (cond [(member(car wordhashlist)bv)(compare(cdr wordhashlist)bv)]
-    (else '#f)
+    ;(write'bv: )
+    ;(display bv)
+   ; (newline)
+    ;(write 'wordhash)
+    ;(display wordhashlist)
+    ;(newline)
+    ;(newline)
+   ; (newline)
+   (if (null? wordhashlist)
+      
+      '()
+      
+    (cond [(member(car wordhashlist)bv)(compare bv(cdr wordhashlist))]
+          (else '#f)
           )
    ))
 )
@@ -179,20 +188,20 @@
 (define gen-checker
   (lambda (hashfunctionlist dict)
     (lambda (w)
-      
-    (compare  (createbv hashfunctionlist dict)
-      (wordhash hashfunctionlist w)
+      (define bitvectors(createbv hashfunctionlist dictionary))
+      (define wordhashlist(wordhash hashfunctionlist w))
+    (compare  bitvectors wordhashlist)
 
       )
       )
     )
-  )
+  
 
 ;; -----------------------------------------------------
 ;; EXAMPLE SPELL CHECKERS
-(define bv(createbv hashfl-1 dictionary))
-(define bv2(createbv hashfl-2 dictionary))
-(define bv3(createbv hashfl-3 dictionary))
+;(define bv(createbv hashfunctionlist dictionary))
+;(define bv2(createbv hashfl-2 dictionary))
+;(define bv3(createbv hashfl-3 dictionary))
 
 
 (define checker-1 (gen-checker hashfl-1 dictionary))
