@@ -39,21 +39,15 @@
 
 (define createbv
   (lambda (hashlist dict)
-    (if (not (null? hashlist))
-       
-        ;((car hashlist)dict)
-     (append
-      (map (car hashlist)dict)
-      (createbv (cdr hashlist) dict))
-     ((cdr hashlist) dict)
-             ))
+   (cond((null? hashlist) '())
+        (else 
+        (cons(map(car hashlist)dict) (createbv (cdr hashlist)dict))
+       )
+       )
+    )
+  )
     
-     ;   (append
-	;(map (car hashlist) dict)
-;	(createbv (cdr hashlist) dict)
-      )
-                          ;)
- (trace createbv)
+ ;(trace createbv)
 
 (define wordhash
   (lambda (hashlist word)
@@ -63,7 +57,7 @@
           )
          '()
     )))
-(trace wordhash)
+;(trace wordhash)
 
 (define compare
   (lambda (bv wordhashlist)
@@ -72,10 +66,9 @@
       '()
     (cond [(member (car wordhashlist) bv)=>(compare(cdr wordhashlist)bv)]
     (else '#f)
-      ;(member (car wordhashlist) bv)(compare(cdr wordhashlist)bv)
           )
-   )))
-;)
+   ))
+)
 ;; -----------------------------------------------------
 ;; KEY FUNCTION
  ; (define key 5413)
@@ -135,7 +128,7 @@
             A
             (key w)
             )
-          (round
+          (floor
            (*
             A
             (key w)
@@ -144,6 +137,7 @@
           )
          )
 ))))
+(trace gen-hash-multiplication-method)
 
 ;; -----------------------------------------------------
 ;; EXAMPLE HASH FUNCTIONS AND HASH FUNCTION LISTS
@@ -191,10 +185,10 @@
       )
     )
   )
-; if checker 1 then compare (bv1) etc
+
 ;; -----------------------------------------------------
 ;; EXAMPLE SPELL CHECKERS
-(define bv1(createbv hashfl-1 dictionary))
+(define bv(createbv hashfl-1 dictionary))
 (define bv2(createbv hashfl-2 dictionary))
 (define bv3(createbv hashfl-3 dictionary))
 
