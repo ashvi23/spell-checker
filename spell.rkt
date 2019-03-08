@@ -39,38 +39,42 @@
 
 (define createbv
   (lambda (hashlist dict)
-    (if (null? hashlist)
-        '()
+    (if (not (null? hashlist))
+       
+        ;((car hashlist)dict)
      (append
       (map (car hashlist)dict)
       (createbv (cdr hashlist) dict))
-             )
+     ((cdr hashlist) dict)
+             ))
+    
      ;   (append
 	;(map (car hashlist) dict)
 ;	(createbv (cdr hashlist) dict)
       )
-                          )
+                          ;)
  (trace createbv)
 
 (define wordhash
   (lambda (hashlist word)
-    (if (null? hashlist)
-        '()
-    (append
-     (map (car hashlist) word)
+    (if (not (null? hashlist))
+     (cons ((car hashlist) word)
           (wordhash (cdr hashlist) word)
           )
-    )
-  )
-  )
+         '()
+    )))
 (trace wordhash)
 
 (define compare
   (lambda (bv wordhashlist)
    (if(null? wordhashlist)
-      #t
-    (member (car wordhashlist) bv))(compare(cdr wordhashlist)bv)
-   ))
+      ;'#t
+      '()
+    (cond [(member (car wordhashlist) bv)=>(compare(cdr wordhashlist)bv)]
+    (else '#f)
+      ;(member (car wordhashlist) bv)(compare(cdr wordhashlist)bv)
+          )
+   )))
 ;)
 ;; -----------------------------------------------------
 ;; KEY FUNCTION
@@ -175,7 +179,7 @@
 
 ;; -----------------------------------------------------
 ;; SPELL CHECKER GENERATOR
-
+;(define bv(createbv hashfl-1 dict))
 (define gen-checker
   (lambda (hashfunctionlist dict)
     (lambda (w)
@@ -187,9 +191,13 @@
       )
     )
   )
-
+; if checker 1 then compare (bv1) etc
 ;; -----------------------------------------------------
 ;; EXAMPLE SPELL CHECKERS
+(define bv1(createbv hashfl-1 dictionary))
+(define bv2(createbv hashfl-2 dictionary))
+(define bv3(createbv hashfl-3 dictionary))
+
 
 (define checker-1 (gen-checker hashfl-1 dictionary))
 (define checker-2 (gen-checker hashfl-2 dictionary))
