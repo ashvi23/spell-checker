@@ -47,24 +47,26 @@
     )
   )
     
- ;(trace createbv)
+ (trace createbv)
 
 (define wordhash
   (lambda (hashlist word)
-    (if (not (null? hashlist))
-     (cons ((car hashlist) word)
-          (wordhash (cdr hashlist) word)
-          )
-         '()
+    (cond ((null? hashlist) '())
+          (else
+           (cons ((car hashlist) word)
+                 (wordhash (cdr hashlist) word)
+                 )
+           )
+         
     )))
-;(trace wordhash)
+(trace wordhash)
 
 (define compare
   (lambda (bv wordhashlist)
    (if(null? wordhashlist)
-      ;'#t
-      '()
-    (cond [(member (car wordhashlist) bv)=>(compare(cdr wordhashlist)bv)]
+      '#t
+      ;'()
+    (cond [(member(car wordhashlist)bv)(compare(cdr wordhashlist)bv)]
     (else '#f)
           )
    ))
@@ -137,7 +139,7 @@
           )
          )
 ))))
-(trace gen-hash-multiplication-method)
+;(trace gen-hash-multiplication-method)
 
 ;; -----------------------------------------------------
 ;; EXAMPLE HASH FUNCTIONS AND HASH FUNCTION LISTS
