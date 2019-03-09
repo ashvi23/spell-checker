@@ -10,7 +10,7 @@
 (require "include.rkt")
 
 ;; contains simple dictionary definition
-(require "test-dictionary.rkt")
+(require "dictionary.rkt")
 (require racket/trace)
 ;; -----------------------------------------------------
 ;; HELPER FUNCTIONS
